@@ -53,7 +53,7 @@ class ArbolBK // clase arbol
     void Update_table(string branch_path, string leaf){
         // string branch_path es un string que contiene las distancias: "2,1,4"
         // string leaf es la hoja a la que lleva la ruta branch_path (no lo usamos por el momento)
-        // como el arbol es de altura fija entonces la altura debe ser igual a la cantidad de llaves;
+        // como el arbol es de altura fija entonces la altura debe ser igual a la cantidad de llaves + 1;
         cout <<"ruta completa | "<< branch_path <<" |\t"<<leaf<< endl;
         string dist;
         vector<int> temp;
