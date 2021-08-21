@@ -1,4 +1,5 @@
 # Fixed-Queries-Array
 ## A Fast and Economical Data Structure For Proximity  Searching
-![Referencia](https://imgur.com/a/fE9pKK5)
+![Referencia](https://i.imgur.com/5yeWDi9.png)
+
 
