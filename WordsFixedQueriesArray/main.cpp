@@ -134,9 +134,7 @@ class ArbolBK // clase arbol
     void Mostrar(string t) // mostrar por CLI
     {   if(Raiz!=NULL){
             Mos(Raiz,t); // mostramos los nodos siempre que exista almenos uno;
-            // cada vez que se redibuje el arbol evaluamos la tabla.
-        }else{
-            table.clear();
+            // cada vez que se redibuje el arbol redefinimos la tabla.
         }
 
         cout<<endl;
