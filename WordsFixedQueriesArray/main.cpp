@@ -53,7 +53,7 @@ class ArbolBK // clase arbol
     void Update_table(string branch_path, string leaf){
         // string branch_path es un string que contiene las distancias: "2,1,4"
         // string leaf es la hoja a la que lleva la ruta branch_path (no lo usamos por el momento)
-        // como el arbol es de altura fija entonces la altura debe ser igual a la cantidad de llaves + 1;
+        // como el arbol es de altura fija entonces la altura debe ser igual a la cantidad de llaves;
         cout <<"ruta completa | "<< branch_path <<" |\t"<<leaf<< endl;
         string dist;
         vector<int> temp;
@@ -96,23 +96,20 @@ class ArbolBK // clase arbol
                     (R->Sig)[dist]=new Nodo(S); // si no existe un nodo con la misma distancia entonces agregamos el nodo(palabra) como hijo del nodo actual;
                 }
             }
-
-            else{
+            else{ // colision
                 if(key_per_level[level+1] == ""){ // si aun no existe el key en ese nivel;
                     key_per_level[level+1] = R->Sig[dist]->Palabra; //  indicamos que la palabra sera llave en el nivel
-                    Fixed_height_keys(Raiz, 0, level + 1); // hacemos que el arbol cumpla con la propiedad del FHFQT
-                    R->Sig[dist]->Sig[0] =  new Nodo(R->Sig[dist]->Palabra); // agregamos el mismo nodo como hijo con dist = 0;
-                    Ins((R->Sig)[dist],S,level+1); // [new]  evaluamos la palabra S a partir de la llave;
-                }else{ // si ya existe un key;
-                    string nodo_p = R->Sig[dist]->Palabra;
-                    //int dist_nodo_key = EditDist(R->Sig[dist]->Palabra,key_per_level[level+1]);
-                    R->Sig[dist]->Palabra = key_per_level[level+1];
-                    Ins(R->Sig[dist],nodo_p,level+1);
-                    Ins((R->Sig)[dist],S,level+1);
+                    Fixed_height_keys(Raiz, 0, level + 1); // hacemos que todos los nodos en ese nivel se conviertan en clave;
+                    R->Sig[dist]->Sig[0] =  new Nodo(R->Sig[dist]->Palabra); // agregamos explicitamente la mismo nodo, como hijo [0]
+                    Ins((R->Sig)[dist],S,level+1); //  evaluamos la palabra S a partir de la llave;
+                }else{ // si ya existe un key y hay colision;
+                    string nodo_p = R->Sig[dist]->Palabra; //guardamos el valor del nodo que colisiona;
+                    R->Sig[dist]->Palabra = key_per_level[level+1]; // reemplazamos el valor del nodo con el key;
+                    Ins(R->Sig[dist],nodo_p,level+1); // evaluamos tanto el valor del nodo _previo
+                    Ins((R->Sig)[dist],S,level+1); //    y S
                 }
                 //Ins((R->Sig)[dist],S); // en caso que el nodo tenga un hijo con la misma distancia entonces reevaluamos la palabra con ese nodo;
             }
-                // hijo repetido.
 
         }
     }
@@ -134,7 +131,9 @@ class ArbolBK // clase arbol
     void Mostrar(string t) // mostrar por CLI
     {   if(Raiz!=NULL){
             Mos(Raiz,t); // mostramos los nodos siempre que exista almenos uno;
-            // cada vez que se redibuje el arbol redefinimos la tabla.
+            // cada vez que se redibuje el arbol evaluamos la tabla.
+        }else{
+            table.clear();
         }
 
         cout<<endl;
@@ -188,8 +187,8 @@ class ArbolBK // clase arbol
         }
         if (R->Palabra == key_per_level[l]){
             //cout << R->Palabra << "\t"<< key_per_level[l] << endl;
-            char key_message[] = "[key]";
-            TextOut(hdc,x+1,y-15,key_message,strlen(key_message)); // escribimos cad 2 en el cuadro de texto de resultados;
+            char key_message[] = "[K]";
+            TextOut(hdc,x+1,y-20,key_message,strlen(key_message)); // escribimos cad 2 en el cuadro de texto de resultados;
 
         }
     }
@@ -266,7 +265,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         {   PAINTSTRUCT ps;
             HDC hdc;
             hdc=BeginPaint(hwndDlg,&ps);
-            A.MostrarW(hdc,800,50,900,0); // llamamos a la funcion dibujar arbol especificando el punto de inicio y el ancho a = 700
+            A.MostrarW(hdc,700,50,800,0); // llamamos a la funcion dibujar arbol especificando el punto de inicio y el ancho a = 700
 
             EndPaint(hwndDlg,&ps); //
         }
@@ -310,7 +309,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    A.InsertarBloque("mesa masa misa risa casa rosa"); // ingresamos elementos en bloque;
+    //A.InsertarBloque("mesa masa misa risa casa rosa"); // ingresamos elementos en bloque;
     // Mosramos en consola la ruta del arbol en forma de array y aprovechamos para actualizar la tabla;
     A.Mostrar("");
 

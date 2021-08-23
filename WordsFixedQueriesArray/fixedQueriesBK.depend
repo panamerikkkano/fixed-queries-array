@@ -65,3 +65,23 @@
 
 1627439234 e:\wordsfixedqueriesarray\resource.h
 
+1629721874 source:c:\users\zeta\downloads\wordsfixedqueriesarray\main.cpp
+	<sstream>
+	<iostream>
+	<map>
+	<vector>
+	<windows.h>
+	<commctrl.h>
+	<stdio.h>
+	<string>
+	<algorithm>
+	"resource.h"
+
+1627439234 c:\users\zeta\downloads\wordsfixedqueriesarray\resource.h
+
+1629562094 source:c:\users\zeta\downloads\wordsfixedqueriesarray\resource.rc
+	<windows.h>
+	<commctrl.h>
+	<richedit.h>
+	"resource.h"
+
